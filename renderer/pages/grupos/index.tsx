@@ -9,7 +9,7 @@ import CardList from '../../components/utils/CardList'
 import CardListNode from '../../components/utils/CardListNode'
 import CardListActions from '../../components/utils/CardListActions'
 import Btn from '../../components/utils/Btn'
-import BtnIconCard from '../../components/utils/BtnIconCard'
+import BtnIconCard from '../../components/cards/list/buttonicon'
 import Modal from '../../components/utils/Modal'
 
 

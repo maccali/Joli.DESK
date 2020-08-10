@@ -52,71 +52,72 @@ function Home() {
 
   const [load, setLoad] = useState<boolean>(false);
 
-  async function sendRequest(data: any) {
-    setLoad(true)
-    api.post('/api/auth/login', data)
-      .then((response: any) => {
-        if (response.status === 200) {
-          const { access_token, expires_in } = response.data
+  // async function sendRequest(data: any) {
+  //   setLoad(true)
+  //   api.post('/api/auth/login', data)
+  //     .then((response: any) => {
+  //       if (response.status === 200) {
+  //         const { access_token, expires_in } = response.data
 
-          Auth.saveToken(access_token, String(expires_in))
+  //         Auth.saveToken(access_token, String(expires_in))
 
-          console.log(Auth.getToken())
+  //         console.log(Auth.getToken())
 
-          window.location.href = '/dashboard'
+  //         window.location.href = '/dashboard'
 
-        }
-        setLoad(false)
-      }).catch((error) => {
+  //       }
+  //       setLoad(false)
+  //     }).catch((error) => {
 
-        var solve = ErrorHelper.interpreter(error)
-        setServerErrorMsg('Ocorreu um erro tente novamente')
+  //       var solve = ErrorHelper.interpreter(error)
+  //       setServerErrorMsg('Ocorreu um erro tente novamente')
 
-        if (solve) {
-          setServerErrorMsg(solve)
-        }
+  //       if (solve) {
+  //         setServerErrorMsg(solve)
+  //       }
 
-        if (error.status === 401) {
-          setServerErrorMsg('Email ou senha errados')
-        }
-        setServerError(true)
-        setLoad(false)
-      })
-  }
+  //       if (error.status === 401) {
+  //         setServerErrorMsg('Email ou senha errados')
+  //       }
+  //       setServerError(true)
+  //       setLoad(false)
+  //     })
+  // }
 
-  function handleSubmit() {
+  // function handleSubmit() {
 
-    LoginSchema.validate({
-      email,
-      password,
-    }, { abortEarly: false })
-      .then((data) => {
-        console.log('😘 Dados válidos')
-        sendRequest(data)
-      })
-      .catch(function (err) {
-        console.log('😥 Dados inválidos')
+  //   LoginSchema.validate({
+  //     email,
+  //     password,
+  //   }, { abortEarly: false })
+  //     .then((data) => {
+  //       console.log('😘 Dados válidos')
+  //       sendRequest(data)
+  //     })
+  //     .catch(function (err) {
+  //       console.log('😥 Dados inválidos')
 
-        var errors = YupHelper.errorTreatment(err)
+  //       var errors = YupHelper.errorTreatment(err)
 
-        errors.map((item) => {
-          if (item.field === "email") {
-            setEmailError(true)
-            setEmailErrorMsg(item.message)
-          }
-          if (item.field === "password") {
-            setPasswordError(true)
-            setPasswordErrorMsg(item.message)
-          }
-        })
-      });
+  //       errors.map((item) => {
+  //         if (item.field === "email") {
+  //           setEmailError(true)
+  //           setEmailErrorMsg(item.message)
+  //         }
+  //         if (item.field === "password") {
+  //           setPasswordError(true)
+  //           setPasswordErrorMsg(item.message)
+  //         }
+  //       })
+  //     });
+  // }
+  function handleSubmit(){
+    window.location.href = '/dashboard'
   }
 
   return (
     <>
-      <Head>
-        <title>🔑 Login | Admin</title>
-      </Head>
+   c
       <main>
         <div className="container-fluid container-full-height">
           <div className="content flex-center">

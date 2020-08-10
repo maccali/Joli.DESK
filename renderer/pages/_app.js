@@ -1,17 +1,15 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 
 // Custom styles
-import '../public/custom/css/black-dashboard-react.min.css'
-import '../public/custom/css/demo.css'
 import '../public/custom/css/template.css'
 
 // External Components
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 
-import Nav from '../components/utils/Nav'
+import Nav from '../components/utils/nav'
 import Auth from '../helpers/Auth.ts'
-import AuthError from '../components/content/AuthError'
+import AuthError from '../components/content/autherror'
 
 
 // This default export is required in a new `pages/_app.js` file.
