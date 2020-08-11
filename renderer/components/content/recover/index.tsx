@@ -13,37 +13,22 @@ import CardForms from '../../cards/forms'
 import Inline from '../../utils/inline'
 
 
-const RegisterSchema = yup.object().shape({
-  nome: yup
-    .string()
-    .required('Digite um nome'),
+const RecoverSchema = yup.object().shape({
   email: yup
     .string()
     .email('O valor digitado deve ser um Email')
     .required('Digite um email'),
-  password: yup
-    .string()
-    .required('Digite uma senha'),
 });
 
 
-function RegisterContent() {
-
-  const [nome, setNome] = useState<string>('');
-  const [nomeErrorMsg, setNomeErrorMsg] = useState<string>('');
+function RecoverContent() {
 
   const [email, setEmail] = useState<string>('');
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>('');
 
-  const [password, setPassword] = useState<string>('');
-  const [passwordErrorMsg, setPasswordErrorMsg] = useState<string>('');
-
   const [serverErrorMsg, setServerErrorMsg] = useState<string>('');
 
   const [load, setLoad] = useState<boolean>(false);
-
-
-
 
   return (
     <>
@@ -52,17 +37,9 @@ function RegisterContent() {
           <div>
           </div>
           <CardForms
-            title="Registrar"
+            title="Recuperar Senha"
           >
             <div className={styles.inputs}>
-              <Input
-                type="text"
-                name="nome"
-                title="Nome Completo"
-                value={nome}
-                onChange={(event) => setNome(event.target.value)}
-                wrongMessage={nomeErrorMsg}
-              />
 
               <Input
                 type="email"
@@ -73,14 +50,6 @@ function RegisterContent() {
                 wrongMessage={emailErrorMsg}
               />
 
-              <Input
-                type="password"
-                name="senha"
-                title="Senha"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                wrongMessage={passwordErrorMsg}
-              />
             </div>
             {serverErrorMsg != '' ?
               <Inline
@@ -101,7 +70,7 @@ function RegisterContent() {
                 title="Métricas"
                 href='/dashboard'
               >
-                <p>🤺</p>
+                <p>💌</p>
                 <span>Enviar</span>
               </Button>
             </div>
@@ -113,4 +82,4 @@ function RegisterContent() {
   )
 }
 
-export default RegisterContent
+export default RecoverContent
