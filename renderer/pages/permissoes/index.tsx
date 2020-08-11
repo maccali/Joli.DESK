@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { RiFilter2Line } from 'react-icons/ri';
 import { TiPlus } from 'react-icons/ti';
-import { AiOutlineEye, AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 
-import HeaderList from '../../components/utils/HeaderList'
-import CardList from '../../components/utils/CardList'
-import CardListNode from '../../components/utils/CardListNode'
-import CardListActions from '../../components/utils/CardListActions'
-import Btn from '../../components/utils/Btn'
+import HeaderList from '../../components/utils/headerlist'
+import CardList from '../../components/cards/list'
+import CardListNode from '../../components/cards/list/nodes'
+import CardListActions from '../../components/cards/list/actions'
+import Button from '../../components/utils/button'
 import BtnIconCard from '../../components/cards/list/buttonicon'
-import Modal from '../../components/utils/Modal'
+import Modal from '../../components/utils/modal'
 
 
 function Permissoes() {
@@ -59,12 +59,20 @@ function Permissoes() {
       </Head>
       <main className="mt-4 mb-4">
         <HeaderList title="Permissões" >
-          <Btn action={() => { setModalFilter(true) }} iconOnly>
+          <Button
+            title="Filtro"
+            action={() => { setModalFilter(true) }}
+            iconOnly
+          >
             <RiFilter2Line />
-          </Btn>
-          <Btn action={() => { setModalInsert(true) }} iconOnly>
+          </Button>
+          <Button
+            title="Adicionar Parmissão"
+            action={() => { setModalInsert(true) }}
+            iconOnly
+          >
             <TiPlus />
-          </Btn>
+          </Button>
         </HeaderList>
         {permissoes.map(permissao =>
           <CardList key={`${permissao.title}`} title={`${permissao.title}`}>
@@ -72,20 +80,30 @@ function Permissoes() {
               < CardListNode
                 col="col-12 col-md-3"
                 field={`${key}`}
-                value={item ? 'Ativo' : 'Inativo' }
-                tag={item ? '#98ec65' : '#ff5555' } />
+                value={item ? 'Ativo' : 'Inativo'}
+                tag={item ? '#98ec65' : '#ff5555'} />
             )}
             <CardListActions>
-              <Btn action={() => { setModalEdit(true) }} iconOnly noStyle>
+              <Button
+                title={`Editar permissão ${permissao.title}`}
+                action={() => { setModalEdit(true) }}
+                iconOnly
+                noStyle
+              >
                 <BtnIconCard>
                   <AiOutlineEdit />
                 </BtnIconCard>
-              </Btn>
-              <Btn action={() => { console.log('😎 Excluir Permissão') }} iconOnly noStyle>
+              </Button>
+              <Button
+                title={`Excluir permissão ${permissao.title}`}
+                action={() => { console.log('😎 Excluir Permissão') }}
+                iconOnly
+                noStyle
+              >
                 <BtnIconCard>
                   <AiOutlineClose />
                 </BtnIconCard>
-              </Btn>
+              </Button>
             </CardListActions>
           </CardList>
         )}

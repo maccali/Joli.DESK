@@ -4,13 +4,13 @@ import { RiFilter2Line } from 'react-icons/ri';
 import { TiPlus } from 'react-icons/ti';
 import { AiOutlineEye, AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
 
-import HeaderList from '../../components/utils/HeaderList'
-import CardList from '../../components/utils/CardList'
-import CardListNode from '../../components/utils/CardListNode'
-import CardListActions from '../../components/utils/CardListActions'
-import Btn from '../../components/utils/Btn'
+import HeaderList from '../../components/utils/headerlist'
+import CardList from '../../components/cards/list'
+import CardListNode from '../../components/cards/list/nodes'
+import CardListActions from '../../components/cards/list/actions'
+import Button from '../../components/utils/button'
 import BtnIconCard from '../../components/cards/list/buttonicon'
-import Modal from '../../components/utils/Modal'
+import Modal from '../../components/utils/modal'
 
 
 function Grupos() {
@@ -38,32 +38,55 @@ function Grupos() {
       </Head>
       <main className="mt-4 mb-4">
         <HeaderList title="Grupos" >
-          <Btn action={() => { setModalFilter(true) }} iconOnly>
+          <Button
+            title="Filtro"
+            action={() => { setModalFilter(true) }}
+            iconOnly
+          >
             <RiFilter2Line />
-          </Btn>
-          <Btn action={() => { setModalInsert(true) }} iconOnly>
+          </Button>
+          <Button
+            title="Adicionar Grupo"
+            action={() => { setModalInsert(true) }}
+            iconOnly
+          >
             <TiPlus />
-          </Btn>
+          </Button>
         </HeaderList>
         {grupos.map(grupo =>
           <CardList key={`${grupo.title}`} title={`${grupo.title}`}>
             <CardListNode col="col-12 col-md-4" field="Utilidade" value={`${grupo.utility}`} />
             <CardListActions>
-              <Btn action={() => { setModalViewer(true) }} iconOnly noStyle>
+              <Button
+                title="Visualizar item"
+                action={() => { setModalViewer(true) }}
+                iconOnly
+                noStyle
+              >
                 <BtnIconCard>
                   <AiOutlineEye />
                 </BtnIconCard>
-              </Btn>
-              <Btn action={() => { setModalEdit(true) }} iconOnly noStyle>
+              </Button>
+              <Button
+                title="Editar Grupo"
+                action={() => { setModalEdit(true) }}
+                iconOnly
+                noStyle
+              >
                 <BtnIconCard>
                   <AiOutlineEdit />
                 </BtnIconCard>
-              </Btn>
-              <Btn action={() => { console.log('😎 Excluir grupo') }} iconOnly noStyle>
+              </Button>
+              <Button
+                title="Excluir Grupo"
+                action={() => { console.log('😎 Excluir grupo') }}
+                iconOnly
+                noStyle
+              >
                 <BtnIconCard>
                   <AiOutlineClose />
                 </BtnIconCard>
-              </Btn>
+              </Button>
             </CardListActions>
           </CardList>
         )}
