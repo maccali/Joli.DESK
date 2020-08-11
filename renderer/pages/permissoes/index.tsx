@@ -57,7 +57,7 @@ function Permissoes() {
       <Head>
         <title>🩲 Permissões</title>
       </Head>
-      <main className="mt-4 mb-4">
+      <main>
         <HeaderList title="Permissões" >
           <Button
             title="Filtro"
@@ -78,7 +78,7 @@ function Permissoes() {
           <CardList key={`${permissao.title}`} title={`${permissao.title}`}>
             {Object.entries(permissao.acoes).map(([key, item]) =>
               < CardListNode
-                col="col-12 col-md-3"
+                col="col-xs-4 col-sm-3"
                 field={`${key}`}
                 value={item ? 'Ativo' : 'Inativo'}
                 tag={item ? '#98ec65' : '#ff5555'} />

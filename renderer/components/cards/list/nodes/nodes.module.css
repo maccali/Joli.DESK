@@ -2,17 +2,19 @@
   display: flex;
   justify-content: start;
   flex-direction: column;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .node b{
   text-transform: capitalize;
   margin-bottom: 4px;
+  font-size: 14px;
 }
 
 .inliner{
   display: flex;
   align-items: center;
+  font-size: 14px;
 }
 
 .tag{

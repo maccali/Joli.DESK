@@ -12,7 +12,7 @@ function CardListActions({
 
   return (
     <>
-      <div className="col-12">
+      <div className="col-xs-12">
         <div className={styles.node}>
           {children}
         </div>

@@ -36,7 +36,8 @@ function Grupos() {
       <Head>
         <title>👨‍👩‍👦‍👦 Grupos</title>
       </Head>
-      <main className="mt-4 mb-4">
+      <main>
+
         <HeaderList title="Grupos" >
           <Button
             title="Filtro"
@@ -55,7 +56,7 @@ function Grupos() {
         </HeaderList>
         {grupos.map(grupo =>
           <CardList key={`${grupo.title}`} title={`${grupo.title}`}>
-            <CardListNode col="col-12 col-md-4" field="Utilidade" value={`${grupo.utility}`} />
+            <CardListNode col="col-xs-12 col-md-4" field="Utilidade" value={`${grupo.utility}`} />
             <CardListActions>
               <Button
                 title="Visualizar item"

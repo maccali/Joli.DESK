@@ -1,5 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react'
 
+// External Libs
+import '../public/libs/bootstrap/bootstrap.min.css'
+
 // Custom styles
 import '../public/custom/css/template.css'
 
@@ -24,16 +27,10 @@ export default function MyApp({ Component, pageProps }) {
   const allowEntryPoints = [
     '/',
     '/registrar',
-    '/registrar.html',
     '/recuperar',
     '/dashboard',
     '/grupos',
-    '/icons',
-    '/notifications',
-    '/examples',
-    '/examples/tablelist',
-    '/examples/typografy',
-    '/examples/userprofile',
+    '/permissoes',
   ];
 
   const prohibitNavigationBars = [

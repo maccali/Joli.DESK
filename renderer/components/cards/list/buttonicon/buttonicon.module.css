@@ -1,5 +1,7 @@
 
 .btn{
+  width: 42px;
+  height: 42px;
   transition: all .3s;
   padding: 10px;
 }
@@ -13,4 +15,5 @@
 .btn svg{
   width: 23px;
   height: 23px;
+  color: #d0cfcf;
 }
