@@ -2,16 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #b71e23;
+  background-color: #FFDE7D;
   padding: 11px 0;
   border: 0;
   color: black;
   font-weight: bold;
   font-size: 14px;
+  border-radius: 7px;
   transition: all .3s;
 }
 
 .btn:hover{
+  background-color: #637FFF;
   transform: scale(1.05);
 }
 

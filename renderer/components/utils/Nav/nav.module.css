@@ -1,6 +1,7 @@
 .cont{
   position: fixed;
   z-index: 100 !important;
+  width: 100%;
   background-color: #202020;
 }
 

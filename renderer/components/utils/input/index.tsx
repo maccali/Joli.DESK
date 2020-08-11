@@ -1,35 +1,69 @@
 import React from 'react'
+import NumberFormat from 'react-number-format';
 
 import styles from './input.module.css'
 
 type InputFace = {
-  title: string;
-  type: 'email' | 'password' | 'text' | 'textarea' | 'number';
-  label: string;
-  placeholder?: string;
+  type: 'email' | 'password' | 'text' | 'textarea' | 'number' | 'email' | 'url';
+  name: string;
   value: any;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  title?: string;
+  placeholder?: string;
+  wrongMessage?: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement & HTMLTextAreaElement>;
 }
 
 function Input({
-  title,
   type,
-  label,
-  placeholder,
+  name,
+  title,
   value,
+  placeholder,
+  wrongMessage,
   onChange,
 }: InputFace) {
 
   if (type === "textarea") {
     return (
       <>
+        <div className={styles.inputcont}>
+          {title ?
+            <label htmlFor={`${name}`}>{title}</label>
+            : ''}
+          <textarea
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            name={name}
+          >
+          </textarea>
+          {wrongMessage ? <div>
+            <span>{wrongMessage}</span>
+          </div> : ''}
+        </div>
       </>
     )
   }
 
   if (type === "number") {
+    
     return (
       <>
+        <div className={styles.inputcont}>
+          {title ?
+            <label htmlFor={`${name}`}>{title}</label>
+            : ''}
+          <NumberFormat
+            type='text'
+            value={value}
+            onChange={onChange}
+            decimalSeparator={false}
+          />
+          {wrongMessage ? <div>
+            <span>{wrongMessage}</span>
+          </div> : ''}
+        </div>
+
       </>
     )
   }
@@ -37,14 +71,19 @@ function Input({
   return (
     <>
       <div className={styles.inputcont}>
-        <label htmlFor={`${label}`}>{title}</label>
+        {title ?
+          <label htmlFor={`${name}`}>{title}</label>
+          : ''}
         <input
           value={value}
           onChange={onChange}
           placeholder={placeholder}
           type={type}
-          name={label}
+          name={name}
         />
+        {wrongMessage ? <div>
+          <span>{wrongMessage}</span>
+        </div> : ''}
       </div>
     </>
   )

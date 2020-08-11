@@ -1,0 +1,15 @@
+.btns{
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.letters{
+  font-size: 14px;
+  color: white;
+}
+
+.letters a{
+  margin-left: 5px;
+  color: #637FFF;
+}

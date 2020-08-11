@@ -1,0 +1,16 @@
+.cont{
+  border-radius: 7px;
+  padding: 25px;
+  width: 300px;
+  background-color: #2A2D40;
+}
+
+.header h1{
+  color: white;
+  font-size: 23px;
+}
+
+.body > *{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
