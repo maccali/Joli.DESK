@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import styles from './login.module.css'
+
+// Validation Lib
 import * as yup from "yup";
 import YupHelper from '../../../helpers/YupHelper'
 import ErrorHelper from '../../../helpers/ErrorHelper'
 
-
+// Api & auth 
 import api from '../../../services/api'
 import Auth from '../../../helpers/Auth'
 
-import Head from 'next/head'
+// Local Abstractions
 import Button from '../../utils/button'
 import Input from '../../utils/input'
 import CardForms from '../../cards/forms'
