@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import styles from './login.module.css'
 import * as yup from "yup";
-import YupHelper from '../helpers/YupHelper'
-import ErrorHelper from '../helpers/ErrorHelper'
+import YupHelper from '../../../helpers/YupHelper'
+import ErrorHelper from '../../../helpers/ErrorHelper'
 
 
-import api from '../services/api'
-import Auth from '../helpers/Auth'
+import api from '../../../services/api'
+import Auth from '../../../helpers/Auth'
 
 import Head from 'next/head'
 import Button from '../../utils/button'
 import Input from '../../utils/input'
 import CardForms from '../../cards/forms'
+import Inline from '../../utils/inline'
 
 
 const LoginSchema = yup.object().shape({
@@ -28,21 +29,23 @@ const LoginSchema = yup.object().shape({
 function LoginContent() {
 
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  // const [emailError, setEmailError] = useState<boolean>(false);
-  // const [passwordError, setPasswordError] = useState<boolean>(false);
-
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>('');
+  
+  const [password, setPassword] = useState<string>('');
   const [passwordErrorMsg, setPasswordErrorMsg] = useState<string>('');
-
-  const [serverError, setServerError] = useState<boolean>(false);
+  
   const [serverErrorMsg, setServerErrorMsg] = useState<string>('');
 
   const [load, setLoad] = useState<boolean>(false);
 
+  function clear() {
+    setEmailErrorMsg('')
+    setPasswordErrorMsg('')
+    setServerErrorMsg('')
+  }
+
   // async function sendRequest(data: any) {
-  //   setLoad(true)
+    
   //   api.post('/api/auth/login', data)
   //     .then((response: any) => {
   //       if (response.status === 200) {
@@ -68,13 +71,13 @@ function LoginContent() {
   //       if (error.status === 401) {
   //         setServerErrorMsg('Email ou senha errados')
   //       }
-  //       setServerError(true)
   //       setLoad(false)
   //     })
   // }
 
   // function handleSubmit() {
-
+  //   clear()
+  //   setLoad(true)
   //   LoginSchema.validate({
   //     email,
   //     password,
@@ -90,14 +93,16 @@ function LoginContent() {
 
   //       errors.map((item) => {
   //         if (item.field === "email") {
-  //           setEmailError(true)
+  //           // setEmailError(true)
   //           setEmailErrorMsg(item.message)
   //         }
   //         if (item.field === "password") {
-  //           setPasswordError(true)
+  //           // setPasswordError(true)
   //           setPasswordErrorMsg(item.message)
   //         }
   //       })
+
+  //       setLoad(false)
   //     });
   // }
   function handleSubmit() {
@@ -132,6 +137,13 @@ function LoginContent() {
                 wrongMessage={passwordErrorMsg}
               />
             </div>
+            {serverErrorMsg != '' ?
+              <Inline
+                emoji='📡'
+                type='error'
+                message={serverErrorMsg}
+              />
+              : ''}
             <div className={styles.btns}>
               <Button
                 title="Cadastrar"

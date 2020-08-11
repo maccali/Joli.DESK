@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 
 import Head from 'next/head'
 
-import styles from './errorpage.module.css'
+import styles from './page.module.css'
 
 type ErrorPageFace = {
   statusCode: Number,

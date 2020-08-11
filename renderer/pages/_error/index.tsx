@@ -1,5 +1,5 @@
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import PageError from '../../components/utils/errorpage';
+import PageError from '../../components/utils/error/page';
 import Button from '../../components/utils/button'
 
 type ErrorFace = {

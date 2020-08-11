@@ -1,5 +1,6 @@
 import React from 'react'
 import NumberFormat from 'react-number-format';
+import Inline from '../inline'
 
 import styles from './input.module.css'
 
@@ -38,7 +39,10 @@ function Input({
           >
           </textarea>
           {wrongMessage ? <div>
-            <span>{wrongMessage}</span>
+            <Inline
+              type="error"
+              message={wrongMessage}
+            />
           </div> : ''}
         </div>
       </>
@@ -46,7 +50,7 @@ function Input({
   }
 
   if (type === "number") {
-    
+
     return (
       <>
         <div className={styles.inputcont}>
@@ -60,7 +64,10 @@ function Input({
             decimalSeparator={false}
           />
           {wrongMessage ? <div>
-            <span>{wrongMessage}</span>
+            <Inline
+              type="error"
+              message={wrongMessage}
+            />
           </div> : ''}
         </div>
 
@@ -82,7 +89,10 @@ function Input({
           name={name}
         />
         {wrongMessage ? <div>
-          <span>{wrongMessage}</span>
+          <Inline
+            type="error"
+            message={wrongMessage}
+          />
         </div> : ''}
       </div>
     </>

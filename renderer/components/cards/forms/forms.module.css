@@ -1,7 +1,7 @@
 .cont{
   border-radius: 7px;
   padding: 25px;
-  width: 300px;
+  width: 275px;
   background-color: #2A2D40;
 }
 
@@ -11,6 +11,6 @@
 }
 
 .body > *{
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
