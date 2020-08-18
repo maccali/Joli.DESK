@@ -31,6 +31,9 @@ function Button({
   const [width, setWidth] = useState<number>(0)
   const [height, setHeight] = useState<number>(0)
 
+  const isElectron = Boolean(process.env.ELECTRON) === true
+  const isProd = process.env.NODE_ENV === 'production';
+
   function hrefReplace(href: string) {
     window.location.href = href;
   }
@@ -62,7 +65,7 @@ function Button({
         <a
           title={title}
           className={styles.taglink}
-          href={href}
+          href={(isElectron && isProd) ? `${href}.html` : href}
         >
           {children}
         </a>

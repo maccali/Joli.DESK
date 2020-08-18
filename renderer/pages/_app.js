@@ -39,27 +39,34 @@ export default function MyApp({ Component, pageProps }) {
     '/recuperar',
   ];
 
-  function isElectron() {
-    return Boolean(process.env.ELECTRON) === true
-  }
+  
+  const isElectron = Boolean(process.env.ELECTRON) === true
+  const isProd = process.env.NODE_ENV === 'production';
 
   useLayoutEffect(() => {
     setTakeOff(false)
     var pathName = window.location.pathname
 
-    if(pathName === "/home.html"){
+    if (pathName === "/home.html") {
       window.location.href = '/';
+    } 
+
+    if(pathName.includes('.html')){
+      pathName = pathName.split('.')[0]
     }
 
+    console.log('❣')
+    console.log(pathName)
+
     if (!allowEntryPoints.includes(pathName)) {
-      console.log(`💋👀 Verificando Autenticidade para rota "${window.location.pathname}"`)
+      console.log(`💋👀 Verificando Autenticidade para rota "${pathName}"`)
       if (!Auth.isAuth()) {
         setAllowLoad(false)
       } else {
         setAllowLoad(true)
       }
     } else {
-      console.log(`👌👍 Rota Livre "${window.location.pathname}"`)
+      console.log(`👌👍 Rota Livre "${pathName}"`)
       setAllowLoad(true)
     }
 
