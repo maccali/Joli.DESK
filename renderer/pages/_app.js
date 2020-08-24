@@ -31,6 +31,9 @@ export default function MyApp({ Component, pageProps }) {
     '/dashboard',
     '/grupos',
     '/permissoes',
+    '/funcionarios',
+    '/clientes',
+    '/processos',
   ];
 
   const prohibitNavigationBars = [
@@ -39,9 +42,6 @@ export default function MyApp({ Component, pageProps }) {
     '/recuperar',
   ];
 
-  
-  const isElectron = Boolean(process.env.ELECTRON) === true
-  const isProd = process.env.NODE_ENV === 'production';
 
   useLayoutEffect(() => {
     setTakeOff(false)

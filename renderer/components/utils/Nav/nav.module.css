@@ -197,3 +197,16 @@
   color: white;
   font-weight: bold;
 }
+
+.categoria{
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  margin-left: 30px;
+}
+
+.categoria::first-letter{
+  font-size: 17px;
+  font-weight: bold;
+  margin-right: 4px;
+}

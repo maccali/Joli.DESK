@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
 // Icons import 
-import { TiGroupOutline } from "react-icons/ti";
+import { TiGroupOutline, TiFlowChildren } from "react-icons/ti";
 import { FiMenu } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
 import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
+import { FaUserGraduate, FaUserShield } from "react-icons/fa"
 
 // Common Project libs
 import Button from '../button'
@@ -17,6 +18,13 @@ function Nav() {
 
   const [menuActive, setMenuActive] = useState(false);
   const [links, setLinks] = useState([
+    { title: 'Pessoas' },
+    { icone: <FaUserGraduate />, nome: 'Funcionários', url: '/funcionarios' },
+    { icone: <FaUserShield />, nome: 'Clientes', url: '/clientes' },
+    { title: 'Work Flow' },
+    { icone: <TiFlowChildren />, nome: 'Processos', url: '/processos' },
+    { title: 'Administação' },
+    { icone: <GoGraph />, nome: 'Métricas', url: '/dashboard' },
     { icone: <TiGroupOutline />, nome: 'Grupos', url: '/grupos' },
     { icone: <AiOutlineUser />, nome: 'Usuários', url: '/usuarios' },
     { icone: <AiOutlineLock />, nome: 'Permissões', url: '/permissoes' },
@@ -89,18 +97,22 @@ function Nav() {
             </div>
             <div className={styles.menulist}>
               {Object.keys(links).map((key) => (
-                <Button
-                  title={links[key].nome}
-                  href={`${links[key].url}`}
-                  noStyle
-                >
-                  <div className={styles.menuitem} aria-label="Calendar Button">
-                    <span>
-                      {links[key].icone}
-                    </span>
-                    <p>{links[key].nome}</p>
-                  </div>
-                </Button>
+                links[key].title ?
+                  <p className={styles.categoria}>{links[key].title}</p>
+                  :
+                  <Button
+                    title={links[key].nome}
+                    href={`${links[key].url}`}
+                    noStyle
+                  >
+                    <div className={styles.menuitem} aria-label="Calendar Button">
+                      <span>
+                        {links[key].icone}
+                      </span>
+                      <p>{links[key].nome}</p>
+                    </div>
+                  </Button>
+
               ))}
             </div>
           </div>
