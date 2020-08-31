@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import Input from '../../utils/input'
 import Select from '../../utils/select'
 
+import IBGEHelper from '../../../helpers/IBGEHelper'
+
 type EmployeeFace = {
   nome?: string,
   email?: string,
@@ -10,20 +12,20 @@ type EmployeeFace = {
   telefone?: string,
   cidade?: string,
   estado?: string
+  cidades?: Array<string>
+  estados: Array<string>
 }
 
 function EmployeeForm(Employee: EmployeeFace) {
 
-  const [cidades, setCidades] = useState<Array<string>>([]);
-  const [estados, setEstados] = useState<Array<string>>([]);
-
+  const [cidades, setCidades] = useState<Array<string>>(Employee.cidades);
+  const [estados, setEstados] = useState<Array<string>>(Employee.estados);
   const [nome, setNome] = useState<string>(Employee.nome);
   const [email, setEmail] = useState<string>(Employee.email);
   const [endereco, setEndereco] = useState<string>(Employee.endereco);
   const [telefone, setTelefone] = useState<string>(Employee.telefone);
   const [cidade, setCidade] = useState<string>(Employee.cidade);
   const [estado, setEstado] = useState<string>(Employee.estado);
-
 
   return (
     <>
@@ -83,12 +85,15 @@ function EmployeeForm(Employee: EmployeeFace) {
             </div>
 
             <div className="col-xs col-md-6">
-              <Select
-                name="Cidade"
-                items={cidades}
-                selected={cidade}
-                identify="cidade"
-              />
+              {cidades ?
+                <Select
+                  name="Cidade"
+                  items={cidades}
+                  selected={cidade}
+                  identify="cidade"
+                />
+            : ''
+            }
             </div>
           </div>
         </div>

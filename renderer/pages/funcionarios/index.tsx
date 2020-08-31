@@ -13,6 +13,7 @@ import BtnIconCard from '../../components/cards/list/buttonicon'
 import Modal from '../../components/utils/modal'
 
 import EmploeeForm from '../../components/forms/employee'
+import IBGEHelper from '../../helpers/IBGEHelper'
 
 function Funcionarios() {
 
@@ -28,9 +29,19 @@ function Funcionarios() {
   const [modalViewer, setModalViewer] = useState(false)
   const [modalFilter, setModalFilter] = useState(false)
 
+  const [estados, setEstados] = useState<Array<string>>([]);
+
   useEffect(() => {
     console.log('😁 Pegando funcionarios')
   }, [])
+
+  function getEstados() {
+    return IBGEHelper.getEstados()
+  }
+
+  useEffect(() => {
+    setEstados(getEstados())
+  }, []);
 
   return (
     <>
@@ -95,7 +106,9 @@ function Funcionarios() {
       </main>
 
       <Modal open={modalInsert} setClose={() => setModalInsert(!modalInsert)}  >
-        <EmploeeForm />
+        <EmploeeForm
+          estados={estados}
+        />
       </Modal>
       <Modal open={modalEdit} setClose={() => setModalEdit(!modalEdit)}  >
         <EmploeeForm
@@ -103,8 +116,10 @@ function Funcionarios() {
           email="marcontado@gmail.com"
           endereco="Rua Secreta"
           cidade="Alvorada"
-          estado="Rio Grande Do Sul"
+          estado="RS"
           telefone="96969-6969"
+          estados={estados}
+          cidades={IBGEHelper.getCidades('RS')}
         />
       </Modal>
       <Modal open={modalViewer} setClose={() => setModalViewer(!modalViewer)}  >
