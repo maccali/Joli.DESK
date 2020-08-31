@@ -2,7 +2,7 @@ import LogHelper from "./LogHelper";
 
 const ErrorHelper = {
   interpreter: (error: ErrorObject) => {
-    LogHelper.record(error);
+    // LogHelper.record(error);
     if (error.message == "Error: Network Error") {
       return "Erro de conexão verifique se está conectado";
     }
