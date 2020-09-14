@@ -2,12 +2,11 @@ import { string } from "yup";
 
 const LOGS = "Logs";
 
-interface LogObject {
-  error: ErrorObject;
-  dateTime: string;
-}
-
 const LogHelper = {
+  getLogs: () => {
+    return JSON.parse(LogHelper.getRecords()).reverse()
+  },
+
   getRecords: () => {
     return localStorage.getItem(`${LOGS}`);
   },
