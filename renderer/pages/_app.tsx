@@ -33,6 +33,7 @@ export default function MyApp({ Component, pageProps }) {
     "/clientes",
     "/processos",
     "/logs",
+    "/usuarios",
   ];
 
   const prohibitNavigationBars = ["/", "/registrar", "/recuperar"];

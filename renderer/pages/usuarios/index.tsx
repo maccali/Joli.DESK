@@ -11,14 +11,18 @@ import CardListActions from "../../components/cards/list/actions";
 import Button from "../../components/utils/button";
 import BtnIconCard from "../../components/cards/list/buttonicon";
 import Modal from "../../components/utils/modal";
+import Error from "../../components/utils/error/section";
 
-function Clientes() {
-  const [clientes] = useState([
-    { title: "Administradores", utility: "Comandar a parada toda" },
-    { title: "Administradores 2", utility: "Comandar a parada toda" },
-    { title: "Administradores 3", utility: "Comandar a parada toda" },
-    { title: "Administradores 4", utility: "Comandar a parada toda" },
-  ]);
+import api from "../../services/api";
+import { request } from "http";
+
+function Usuarios() {
+  const [usuarios, setUsuarios] = useState([]);
+
+  const [getDataError, setGetDataError] = useState(false);
+  const [getDataErrorMessage, setGetDataErrorMessage] = useState(
+    "Um erro Ocorreu"
+  );
 
   const [modalEdit, setModalEdit] = useState(false);
   const [modalInsert, setModalInsert] = useState(false);
@@ -26,16 +30,28 @@ function Clientes() {
   const [modalFilter, setModalFilter] = useState(false);
 
   useEffect(() => {
-    console.log("😁 Pegando Clientes");
+    getData();
   }, []);
+
+  async function getData() {
+    await api
+      .get("/api/users")
+      .then((request) => {
+        setUsuarios(request.data);
+      })
+      .catch((error) => {
+        setGetDataError(true);
+        setGetDataErrorMessage(`Um erro ${error.request.status} Ocorreu`);
+      });
+  }
 
   return (
     <>
       <Head>
-        <title>Clientes</title>
+        <title>Usuarios</title>
       </Head>
       <main>
-        <HeaderList title="Clientes">
+        <HeaderList title="Usuarios">
           <Button
             title="Filtro"
             action={() => {
@@ -46,7 +62,7 @@ function Clientes() {
             <RiFilter2Line />
           </Button>
           <Button
-            title="Adicionar cliente"
+            title="Adicionar usuario"
             action={() => {
               setModalInsert(true);
             }}
@@ -55,12 +71,13 @@ function Clientes() {
             <TiPlus />
           </Button>
         </HeaderList>
-        {clientes.map((cliente) => (
-          <CardList key={`${cliente.title}`} title={`${cliente.title}`}>
+        {getDataError ? <Error message={getDataErrorMessage}></Error> : ""}
+        {usuarios.map((usuario) => (
+          <CardList key={`${usuario.email}`} title={`${usuario.name}`}>
             <CardListNode
               col="col-xs-12 col-md-4"
               field="Utilidade"
-              value={`${cliente.utility}`}
+              value={`${usuario.sociedade}`}
             />
             <CardListActions>
               <Button
@@ -120,4 +137,4 @@ function Clientes() {
   );
 }
 
-export default Clientes;
+export default Usuarios;

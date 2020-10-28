@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
-import Input from '../../utils/input'
-import Select from '../../utils/select'
+import Input from "../../utils/input";
+import Select from "../../utils/select";
+import HeaderForm from "../../utils/headerform";
 
-import IBGEHelper from '../../../helpers/IBGEHelper'
+import IBGEHelper from "../../../helpers/IBGEHelper";
 
 type EmployeeFace = {
-  nome?: string,
-  email?: string,
-  endereco?: string,
-  telefone?: string,
-  cidade?: string,
-  estado?: string
-  cidades?: Array<string>
-  estados: Array<string>
-}
+  nome?: string;
+  email?: string;
+  endereco?: string;
+  telefone?: string;
+  cidade?: string;
+  estado?: string;
+  cidades?: Array<string>;
+  estados: Array<string>;
+};
 
 function EmployeeForm(Employee: EmployeeFace) {
-
   const [cidades, setCidades] = useState<Array<string>>(Employee.cidades);
   const [estados, setEstados] = useState<Array<string>>(Employee.estados);
   const [nome, setNome] = useState<string>(Employee.nome);
@@ -33,44 +33,55 @@ function EmployeeForm(Employee: EmployeeFace) {
         <div className="container">
           <div className="row">
             <div className="col-xs col-md-12">
+              <HeaderForm title="Funcionário" />
+            </div>
+            <div className="col-xs col-md-12">
               <Input
-                title='Nome'
+                title="Nome"
                 name="nome"
                 type="text"
                 value={nome}
-                onChange={() => { setNome(event.target.value) }}
+                onChange={() => {
+                  setNome(event.target.value);
+                }}
               />
             </div>
           </div>
           <div className="row">
             <div className="col-xs col-md-6">
               <Input
-                title='Email'
+                title="Email"
                 name="email"
                 type="email"
                 value={email}
-                onChange={() => { setEmail(event.target.value) }}
+                onChange={() => {
+                  setEmail(event.target.value);
+                }}
               />
             </div>
 
             <div className="col-xs col-md-6">
               <Input
-                title='Telefone'
+                title="Telefone"
                 name="telefone"
                 type="text"
                 value={telefone}
-                onChange={() => { setTelefone(event.target.value) }}
+                onChange={() => {
+                  setTelefone(event.target.value);
+                }}
               />
             </div>
           </div>
           <div className="row">
             <div className="col-xs col-md-12">
               <Input
-                title='Endereço'
+                title="Endereço"
                 name="endereco"
                 type="text"
                 value={endereco}
-                onChange={() => { setEndereco(event.target.value) }}
+                onChange={() => {
+                  setEndereco(event.target.value);
+                }}
               />
             </div>
           </div>
@@ -85,21 +96,22 @@ function EmployeeForm(Employee: EmployeeFace) {
             </div>
 
             <div className="col-xs col-md-6">
-              {cidades ?
+              {cidades ? (
                 <Select
                   name="Cidade"
                   items={cidades}
                   selected={cidade}
                   identify="cidade"
                 />
-            : ''
-            }
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default EmployeeForm
+export default EmployeeForm;
