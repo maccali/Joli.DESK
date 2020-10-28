@@ -19,12 +19,14 @@ import api from "../../services/api";
 
 function Permissoes() {
   const [permissoes, setPermissoes] = useState([]);
-  const [costumes, setCostumes] = useState([]);
+  const [costumes, setCostumes] = useState(null);
 
   const [getDataError, setGetDataError] = useState(false);
   const [getDataErrorMessage, setGetDataErrorMessage] = useState(
     "Um erro Ocorreu"
   );
+
+  const [current, setCurrent] = useState(null);
 
   const [modalEdit, setModalEdit] = useState(false);
   const [modalInsert, setModalInsert] = useState(false);
@@ -58,6 +60,20 @@ function Permissoes() {
 
   function captalize(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function deletePermition(item: any) {
+    console.log(item)
+    api
+      .delete(`/api/sociedades/${item.name}`)
+      .then((request) => {
+        // console.log(request.data);
+        location.reload();
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
@@ -122,6 +138,7 @@ function Permissoes() {
                 title={`Editar permissão ${permissao.title}`}
                 action={() => {
                   setModalEdit(true);
+                  setCurrent(permissao);
                 }}
                 iconOnly
                 noStyle
@@ -134,6 +151,7 @@ function Permissoes() {
                 title={`Excluir permissão ${permissao.title}`}
                 action={() => {
                   console.log("😎 Excluir Permissão");
+                  deletePermition(permissao)
                 }}
                 iconOnly
                 noStyle
@@ -148,14 +166,26 @@ function Permissoes() {
       </main>
 
       <Modal open={modalInsert} setClose={() => setModalInsert(!modalInsert)}>
-        {costumes ? <PermitionsForm name="Teste" list={costumes} /> : ""}
-        {/* <div>
-        {costumes}
-
-        </div> */}
+        {costumes ? <PermitionsForm costumes={costumes} type="INSERT" /> : ""}
       </Modal>
-      <Modal open={modalEdit} setClose={() => setModalEdit(!modalEdit)}>
-        EDIT
+      <Modal
+        open={modalEdit}
+        setClose={() => {
+          setModalEdit(!modalEdit);
+          setCurrent(null);
+        }}
+      >
+        {current ? (
+          <PermitionsForm
+            name={current.name}
+            descricao={current.description}
+            list={current.list}
+            costumes={costumes}
+            type="UPDATE"
+          />
+        ) : (
+          ""
+        )}
       </Modal>
       <Modal open={modalViewer} setClose={() => setModalViewer(!modalViewer)}>
         VIEW
