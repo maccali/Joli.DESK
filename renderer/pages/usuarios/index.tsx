@@ -14,7 +14,6 @@ import Modal from "../../components/utils/modal";
 import Error from "../../components/utils/error/section";
 
 import api from "../../services/api";
-import { request } from "http";
 
 function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);

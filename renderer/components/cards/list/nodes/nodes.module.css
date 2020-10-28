@@ -25,3 +25,11 @@
   margin-right: 7px;
   border: 1px solid  black;
 }
+
+.child{
+  background-color: #444763;
+  width: 100%;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-radius: 10px;
+}

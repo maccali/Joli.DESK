@@ -1,56 +1,64 @@
-import React, { useState, useEffect } from 'react'
-import Head from 'next/head'
-import { RiFilter2Line } from 'react-icons/ri';
-import { TiPlus } from 'react-icons/ti';
-import { AiOutlineEdit, AiOutlineClose } from 'react-icons/ai';
+import React, { useState, useEffect } from "react";
+import Head from "next/head";
+import { RiFilter2Line } from "react-icons/ri";
+import { TiPlus } from "react-icons/ti";
+import { AiOutlineEdit, AiOutlineClose } from "react-icons/ai";
 
-import HeaderList from '../../components/utils/headerlist'
-import CardList from '../../components/cards/list'
-import CardListNode from '../../components/cards/list/nodes'
-import CardListActions from '../../components/cards/list/actions'
-import Button from '../../components/utils/button'
-import BtnIconCard from '../../components/cards/list/buttonicon'
-import Modal from '../../components/utils/modal'
+import HeaderList from "../../components/utils/headerlist";
+import CardList from "../../components/cards/list";
+import CardListNode from "../../components/cards/list/nodes";
+import CardListActions from "../../components/cards/list/actions";
+import Button from "../../components/utils/button";
+import BtnIconCard from "../../components/cards/list/buttonicon";
+import Modal from "../../components/utils/modal";
+import Error from "../../components/utils/error/section";
 
+import PermitionsForm from "../../components/forms/permitions";
+
+import api from "../../services/api";
 
 function Permissoes() {
+  const [permissoes, setPermissoes] = useState([]);
+  const [costumes, setCostumes] = useState([]);
 
-  const [permissoes] = useState([
-    {
-      title: 'Categoria', acoes: {
-        inserir: true,
-        visualisar: true,
-        editar: true,
-        excluir: true,
-      }
-    },
-    {
-      title: 'Post', acoes: {
-        inserir: false,
-        visualisar: true,
-        editar: false,
-        desativar: true,
-      }
-    },
-    {
-      title: 'Grupos', acoes: {
-        inserir: false,
-        visualisar: true,
-        editar: true,
-        excluir: true,
-        desativar: true,
-      }
-    },
-  ])
+  const [getDataError, setGetDataError] = useState(false);
+  const [getDataErrorMessage, setGetDataErrorMessage] = useState(
+    "Um erro Ocorreu"
+  );
 
-  const [modalEdit, setModalEdit] = useState(false)
-  const [modalInsert, setModalInsert] = useState(false)
-  const [modalViewer, setModalViewer] = useState(false)
-  const [modalFilter, setModalFilter] = useState(false)
+  const [modalEdit, setModalEdit] = useState(false);
+  const [modalInsert, setModalInsert] = useState(false);
+  const [modalViewer, setModalViewer] = useState(false);
+  const [modalFilter, setModalFilter] = useState(false);
 
   useEffect(() => {
-    console.log('😁 Pegando permissoes')
-  }, [])
+    getData();
+    getRegras();
+  }, []);
+
+  async function getData() {
+    await api
+      .get("/api/sociedades")
+      .then((request) => {
+        console.log(request.data);
+        setPermissoes(request.data);
+      })
+      .catch((error) => {
+        setGetDataError(true);
+        setGetDataErrorMessage(`Um erro ${error.request.status} Ocorreu`);
+      });
+  }
+
+  async function getRegras() {
+    await api.get("/api/costumes").then((request) => {
+      console.log(request.data);
+      setCostumes(request.data);
+    });
+  }
+
+  function captalize(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   return (
     <>
@@ -58,35 +66,63 @@ function Permissoes() {
         <title>🩲 Permissões</title>
       </Head>
       <main>
-        <HeaderList title="Permissões" >
+        <HeaderList title="Permissões">
           <Button
             title="Filtro"
-            action={() => { setModalFilter(true) }}
+            action={() => {
+              setModalFilter(true);
+            }}
             iconOnly
           >
             <RiFilter2Line />
           </Button>
           <Button
             title="Adicionar Parmissão"
-            action={() => { setModalInsert(true) }}
+            action={() => {
+              setModalInsert(true);
+            }}
             iconOnly
           >
             <TiPlus />
           </Button>
         </HeaderList>
-        {permissoes.map(permissao =>
-          <CardList key={`${permissao.title}`} title={`${permissao.title}`}>
-            {Object.entries(permissao.acoes).map(([key, item]) =>
-              < CardListNode
+        {getDataError ? <Error message={getDataErrorMessage}></Error> : ""}
+        {permissoes.map((permissao) => (
+          <CardList
+            key={`${permissao.name}`}
+            title={`${captalize(permissao.name)}`}
+          >
+            {/* {Object.entries(permissao.acoes).map(([key, item]) => (
+              <CardListNode
                 col="col-xs-4 col-sm-3"
                 field={`${key}`}
-                value={item ? 'Ativo' : 'Inativo'}
-                tag={item ? '#98ec65' : '#ff5555'} />
-            )}
+                value={item ? "Ativo" : "Inativo"}
+                tag={item ? "#98ec65" : "#ff5555"}
+              />
+            ))} */}
+
+            <CardListNode
+              col="col-xs-12"
+              field="Descrição"
+              value={permissao.description}
+            />
+
+            <CardListNode
+              col="col-xs-12"
+              field="Regras Aceitas"
+              value={permissao.list}
+            >
+              {permissao.list.map((item) => (
+                <CardListNode col="col-xs-4 col-sm-3" field="" value={item} />
+              ))}
+            </CardListNode>
+
             <CardListActions>
               <Button
                 title={`Editar permissão ${permissao.title}`}
-                action={() => { setModalEdit(true) }}
+                action={() => {
+                  setModalEdit(true);
+                }}
                 iconOnly
                 noStyle
               >
@@ -96,7 +132,9 @@ function Permissoes() {
               </Button>
               <Button
                 title={`Excluir permissão ${permissao.title}`}
-                action={() => { console.log('😎 Excluir Permissão') }}
+                action={() => {
+                  console.log("😎 Excluir Permissão");
+                }}
                 iconOnly
                 noStyle
               >
@@ -106,24 +144,27 @@ function Permissoes() {
               </Button>
             </CardListActions>
           </CardList>
-        )}
+        ))}
       </main>
 
-      <Modal open={modalInsert} setClose={() => setModalInsert(!modalInsert)}  >
-        INSERT
+      <Modal open={modalInsert} setClose={() => setModalInsert(!modalInsert)}>
+        {costumes ? <PermitionsForm name="Teste" list={costumes} /> : ""}
+        {/* <div>
+        {costumes}
+
+        </div> */}
       </Modal>
-      <Modal open={modalEdit} setClose={() => setModalEdit(!modalEdit)}  >
+      <Modal open={modalEdit} setClose={() => setModalEdit(!modalEdit)}>
         EDIT
       </Modal>
-      <Modal open={modalViewer} setClose={() => setModalViewer(!modalViewer)}  >
+      <Modal open={modalViewer} setClose={() => setModalViewer(!modalViewer)}>
         VIEW
       </Modal>
-      <Modal open={modalFilter} setClose={() => setModalFilter(!modalFilter)}  >
+      <Modal open={modalFilter} setClose={() => setModalFilter(!modalFilter)}>
         Filter
       </Modal>
-
     </>
-  )
+  );
 }
 
-export default Permissoes
+export default Permissoes;

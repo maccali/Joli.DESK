@@ -1,40 +1,38 @@
-import React from 'react'
+import React, { Children, ReactNode } from "react";
 
-import styles from './nodes.module.css'
+import styles from "./nodes.module.css";
 
 type CardListNodeFace = {
   col: string;
   field: string;
   value: string;
   tag?: string;
-}
+  children?: ReactNode;
+};
 
-function CardListNode({
-  col,
-  field,
-  value,
-  tag
-}: CardListNodeFace) {
-
+function CardListNode({ col, field, value, tag, children }: CardListNodeFace) {
   return (
     <>
       <div className={`${col}`}>
         <div className={styles.node}>
           <b>{field}</b>
           <div className={styles.inliner}>
-            {tag ?
+            {tag ? (
               <span
                 className={styles.tag}
                 style={{
                   backgroundColor: tag,
-                }}></span> : ''}
-            {value}
+                }}
+              ></span>
+            ) : (
+              ""
+            )}
+            {children ? <div className={styles.child}>{children}</div> : value}
           </div>
         </div>
       </div>
     </>
-  )
-
+  );
 }
 
-export default CardListNode
+export default CardListNode;
