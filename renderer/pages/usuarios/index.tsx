@@ -13,15 +13,22 @@ import BtnIconCard from "../../components/cards/list/buttonicon";
 import Modal from "../../components/utils/modal";
 import Error from "../../components/utils/error/section";
 
+import UsersForm from "../../components/forms/users";
+
 import api from "../../services/api";
 
 function Usuarios() {
+  const [permissoes, setPermissoes] = useState([]);
+  const [sociedades, setSociedades] = useState(null);
+
   const [usuarios, setUsuarios] = useState([]);
 
   const [getDataError, setGetDataError] = useState(false);
   const [getDataErrorMessage, setGetDataErrorMessage] = useState(
     "Um erro Ocorreu"
   );
+
+  const [current, setCurrent] = useState(null);
 
   const [modalEdit, setModalEdit] = useState(false);
   const [modalInsert, setModalInsert] = useState(false);
@@ -30,6 +37,7 @@ function Usuarios() {
 
   useEffect(() => {
     getData();
+    getRegras();
   }, []);
 
   async function getData() {
@@ -41,6 +49,25 @@ function Usuarios() {
       .catch((error) => {
         setGetDataError(true);
         setGetDataErrorMessage(`Um erro ${error.request.status} Ocorreu`);
+      });
+  }
+
+  async function getRegras() {
+    await api.get("/api/sociedades").then((request) => {
+      console.log(request.data);
+      setSociedades(request.data);
+    });
+  }
+
+  function deleteUser(userId: any) {
+    api
+      .delete(`/api/users/${userId}`)
+      .then((request) => {
+        // console.log(request.data);
+        location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 
@@ -95,6 +122,7 @@ function Usuarios() {
                 title="Editar cliente"
                 action={() => {
                   setModalEdit(true);
+                  setCurrent(usuario);
                 }}
                 iconOnly
                 noStyle
@@ -106,7 +134,7 @@ function Usuarios() {
               <Button
                 title="Excluir cliente"
                 action={() => {
-                  console.log("😎 Excluir cliente");
+                  deleteUser(usuario.userId);
                 }}
                 iconOnly
                 noStyle
@@ -121,10 +149,28 @@ function Usuarios() {
       </main>
 
       <Modal open={modalInsert} setClose={() => setModalInsert(!modalInsert)}>
-        INSERT
+        {sociedades ? <UsersForm sociedades={sociedades} type="INSERT" /> : ""}
       </Modal>
-      <Modal open={modalEdit} setClose={() => setModalEdit(!modalEdit)}>
-        EDIT
+      <Modal
+        open={modalEdit}
+        setClose={() => {
+          setModalEdit(!modalEdit);
+          setCurrent(null);
+        }}
+      >
+        {current ? (
+          <UsersForm
+            userId={current.userId}
+            name={current.name}
+            email={current.email}
+            password={current.password}
+            sociedadesList={current.sociedade}
+            sociedades={sociedades}
+            type="UPDATE"
+          />
+        ) : (
+          ""
+        )}
       </Modal>
       <Modal open={modalViewer} setClose={() => setModalViewer(!modalViewer)}>
         VIEW
