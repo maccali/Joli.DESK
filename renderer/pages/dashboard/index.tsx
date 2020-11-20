@@ -9,10 +9,12 @@ import api from "../../services/api";
 function Dashboard() {
   const [totalRequests, setTotalRequests] = useState<number>(0);
   const [totalProcessos, setTotalProcessos] = useState<number>(0);
+  const [totalUsuarios, setTotalUsuarios] = useState<number>(0);
 
   useEffect(() => {
     getTotalRequests();
     getTotalProcessos();
+    getTotalUsuarios();
   }, []);
 
   async function getTotalRequests() {
@@ -27,6 +29,12 @@ function Dashboard() {
     });
   }
 
+  async function getTotalUsuarios() {
+    await api.get("/api/totalizador/usuarios").then((request) => {
+      setTotalUsuarios(request.data.total);
+    });
+  }
+
   return (
     <>
       <Head>
@@ -37,26 +45,36 @@ function Dashboard() {
         <div className="container-fluid">
           <div className={`container`}>
             <div className="row">
-              <div className="col-12 col-md-4">
-                {totalRequests != 0 ? (
+              {totalRequests != 0 ? (
+                <div className="col-12 col-md-4">
                   <Totalizator
                     title="Requests Auditadas"
                     number={totalRequests}
                   ></Totalizator>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="col-12 col-md-4">
-                {totalProcessos != 0 ? (
+                </div>
+              ) : (
+                ""
+              )}
+              {totalProcessos != 0 ? (
+                <div className="col-12 col-md-4">
                   <Totalizator
                     title="Processos Registrados"
                     number={totalProcessos}
                   ></Totalizator>
-                ) : (
-                  ""
-                )}
-              </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {totalUsuarios != 0 ? (
+                <div className="col-12 col-md-4">
+                  <Totalizator
+                    title="Total Usuários"
+                    number={totalUsuarios}
+                  ></Totalizator>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
