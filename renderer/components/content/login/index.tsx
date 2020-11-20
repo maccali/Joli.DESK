@@ -51,9 +51,9 @@ function LoginContent() {
     api.post('/api/auth/login', data)
       .then((response: any) => {
         if (response.status === 200) {
-          const { access_token, expires_in } = response.data
+          const { access_token, expires_in, user } = response.data
 
-          Auth.saveToken(access_token, String(expires_in))
+          Auth.saveToken(access_token, String(expires_in), JSON.stringify(user))
 
           console.log(Auth.getToken())
 

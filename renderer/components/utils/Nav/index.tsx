@@ -8,6 +8,7 @@ import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import { GiAxeInLog, GiExitDoor } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import { FaUserGraduate, FaUserShield } from "react-icons/fa";
+import Auth from "../../../helpers/Auth";
 
 // Common Project libs
 import Button from "../button";
@@ -27,7 +28,12 @@ function Nav() {
     { icone: <GoGraph />, nome: "Métricas", url: "/dashboard" },
     { icone: <TiGroupOutline />, nome: "Grupos", url: "/grupos" },
     { icone: <AiOutlineUser />, nome: "Usuários", url: "/usuarios" },
-    { icone: <AiOutlineLock />, nome: "Permissões", url: "/permissoes" },
+    {
+      icone: <AiOutlineLock />,
+      nome: "Permissões",
+      url: "/permissoes",
+      permissao: "administrador",
+    },
     { icone: <GiAxeInLog />, nome: "Logs", url: "/logs" },
     { title: " " },
     { icone: <GiExitDoor />, nome: "Sair", url: "/" },
@@ -99,22 +105,44 @@ function Nav() {
               </div>
               <div className={styles.menulist}>
                 {Object.keys(links).map((key) =>
-                  links[key].title ? (
-                    <p className={styles.categoria}>{links[key].title}</p>
-                  ) : (
-                    <Button
-                      title={links[key].nome}
-                      href={`${links[key].url}`}
-                      noStyle
-                    >
-                      <div
-                        className={styles.menuitem}
-                        aria-label="Calendar Button"
+                  !links[key].permissao ? (
+                    links[key].title ? (
+                      <p className={styles.categoria}>{links[key].title}</p>
+                    ) : (
+                      <Button
+                        title={links[key].nome}
+                        href={`${links[key].url}`}
+                        noStyle
                       >
-                        <span>{links[key].icone}</span>
-                        <p>{links[key].nome}</p>
-                      </div>
-                    </Button>
+                        <div
+                          className={styles.menuitem}
+                          aria-label="Calendar Button"
+                        >
+                          <span>{links[key].icone}</span>
+                          <p>{links[key].nome}</p>
+                        </div>
+                      </Button>
+                    )
+                  ) : Auth.isAllow(links[key].permissao) ? (
+                    links[key].title ? (
+                      <p className={styles.categoria}>{links[key].title}</p>
+                    ) : (
+                      <Button
+                        title={links[key].nome}
+                        href={`${links[key].url}`}
+                        noStyle
+                      >
+                        <div
+                          className={styles.menuitem}
+                          aria-label="Calendar Button"
+                        >
+                          <span>{links[key].icone}</span>
+                          <p>{links[key].nome}</p>
+                        </div>
+                      </Button>
+                    )
+                  ) : (
+                    ""
                   )
                 )}
               </div>
