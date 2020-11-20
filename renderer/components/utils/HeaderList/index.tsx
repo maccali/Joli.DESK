@@ -4,7 +4,7 @@ import styles from './headerlist.module.css'
 
 type HeaderListFace = {
   title: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 function HeaderList({

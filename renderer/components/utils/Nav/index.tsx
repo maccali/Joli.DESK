@@ -5,7 +5,7 @@ import { TiGroupOutline, TiFlowChildren } from "react-icons/ti";
 import { FiMenu } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
 import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
-import { GiAxeInLog } from "react-icons/gi";
+import { GiAxeInLog, GiExitDoor } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import { FaUserGraduate, FaUserShield } from "react-icons/fa";
 
@@ -29,6 +29,8 @@ function Nav() {
     { icone: <AiOutlineUser />, nome: "Usuários", url: "/usuarios" },
     { icone: <AiOutlineLock />, nome: "Permissões", url: "/permissoes" },
     { icone: <GiAxeInLog />, nome: "Logs", url: "/logs" },
+    { title: " " },
+    { icone: <GiExitDoor />, nome: "Sair", url: "/" },
   ]);
 
   function setMenuOpenWithWithSize() {

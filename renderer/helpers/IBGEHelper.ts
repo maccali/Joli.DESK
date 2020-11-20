@@ -2,7 +2,6 @@ import apiIBGE from '../services/apiIbge'
 
 const IBGEHelper = {
   getEstados: () => {
-    console.log('bosta')
     apiIBGE
       .get(
         'localidades/estados'

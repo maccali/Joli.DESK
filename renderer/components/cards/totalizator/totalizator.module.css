@@ -1,0 +1,32 @@
+.cont{
+  border-radius: 7px;
+  padding: 15px;
+  width: 100%;
+  background-color: #232848;
+  border: 2px solid #5411a1;
+}
+
+.header h2{
+  color: white;
+  font-size: 14px;
+  border-bottom: 2px solid #5411a1;
+  margin-bottom: 4px;
+}
+
+.header h2::first-letter{
+  font-size: 19px;
+  margin-right: 4px;
+}
+
+.body > *{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.body p{
+  display: flex;
+  font-size: 30px;
+  color: aliceblue;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
