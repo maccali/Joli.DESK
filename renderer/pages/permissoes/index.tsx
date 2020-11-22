@@ -108,14 +108,6 @@ function Permissoes() {
             key={`${permissao.name}`}
             title={`${captalize(permissao.name)}`}
           >
-            {/* {Object.entries(permissao.acoes).map(([key, item]) => (
-              <CardListNode
-                col="col-xs-4 col-sm-3"
-                field={`${key}`}
-                value={item ? "Ativo" : "Inativo"}
-                tag={item ? "#98ec65" : "#ff5555"}
-              />
-            ))} */}
 
             <CardListNode
               col="col-xs-12"

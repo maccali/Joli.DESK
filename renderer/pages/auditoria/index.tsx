@@ -12,7 +12,7 @@ import BtnIconCard from "../../components/cards/list/buttonicon";
 import Modal from "../../components/utils/modal";
 import Error from "../../components/utils/error/section";
 
-import PermitionsForm from "../../components/forms/permitions";
+import AuditViewer from "../../components/viewers/audit";
 import AuditFilterForm from "../../components/filters/audit";
 
 import api from "../../services/api";
@@ -29,12 +29,36 @@ function Audit() {
   const [emailFilter, setEmailFilter] = useState("");
   const [pageFilter, setPageFilter] = useState(1);
 
+  const [current, setCurrent] = useState(null);
+
   const [modalViewer, setModalViewer] = useState(false);
   const [modalFilter, setModalFilter] = useState(false);
 
   useEffect(() => {
     getData();
   }, []);
+
+  // useEffect(() => {
+  //   if (current) {
+  //     if (current.operator) {
+  //       current.operator = JSON.parse(current.operator);
+  //     }
+  //     if (current.request) {
+  //       current.request = JSON.parse(current.request);
+  //     }
+  //   }
+  // }, [current]);
+
+  function convertCurrent(current) {
+    if (current.operator) {
+      current.operator = JSON.parse(current.operator);
+    }
+    if (current.request) {
+      current.request = JSON.parse(current.request);
+    }
+
+    return current;
+  }
 
   async function getData() {
     console.log("Status", statusFilter);
@@ -96,6 +120,7 @@ function Audit() {
               <Button
                 title="Visualizar item"
                 action={() => {
+                  setCurrent(convertCurrent(auditoria));
                   setModalViewer(true);
                 }}
                 iconOnly
@@ -105,27 +130,19 @@ function Audit() {
                   <AiOutlineEye />
                 </BtnIconCard>
               </Button>
-
-              {/* <Button
-                title={`Excluir permissão ${permissao.title}`}
-                action={() => {
-                  console.log("😎 Excluir Permissão");
-                  deletePermition(permissao);
-                }}
-                iconOnly
-                noStyle
-              >
-                <BtnIconCard>
-                  <AiOutlineClose />
-                </BtnIconCard>
-              </Button> */}
             </CardListActions>
           </CardList>
         ))}
       </main>
 
-      <Modal open={modalViewer} setClose={() => setModalViewer(!modalViewer)}>
-        VIEW
+      <Modal
+        open={modalViewer}
+        setClose={() => {
+          setModalViewer(!modalViewer);
+          setCurrent(null);
+        }}
+      >
+        {current ? <AuditViewer current={current} /> : ""}
       </Modal>
       <Modal open={modalFilter} setClose={() => setModalFilter(!modalFilter)}>
         <AuditFilterForm
