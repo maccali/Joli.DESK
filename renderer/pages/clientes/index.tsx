@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { RiFilter2Line } from "react-icons/ri";
 import { TiPlus } from "react-icons/ti";
-import { AiOutlineEye, AiOutlineEdit, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineClose } from "react-icons/ai";
 
 import HeaderList from "../../components/utils/headerlist";
 import CardList from "../../components/cards/list";
@@ -11,14 +11,24 @@ import CardListActions from "../../components/cards/list/actions";
 import Button from "../../components/utils/button";
 import BtnIconCard from "../../components/cards/list/buttonicon";
 import Modal from "../../components/utils/modal";
+import Error from "../../components/utils/error/section";
+
+import ClientesForm from "../../components/forms/clientes";
+
+import api from "../../services/api";
 
 function Clientes() {
-  const [clientes] = useState([
-    { title: "Administradores", utility: "Comandar a parada toda" },
-    { title: "Administradores 2", utility: "Comandar a parada toda" },
-    { title: "Administradores 3", utility: "Comandar a parada toda" },
-    { title: "Administradores 4", utility: "Comandar a parada toda" },
-  ]);
+  const [clientes, setClientes] = useState([]);
+  // const [costumes, setCostumes] = useState(null);
+  const [ufList, setUfList] = useState(null);
+  const [cidadeList, setCidadeList] = useState(null);
+
+  const [getDataError, setGetDataError] = useState(false);
+  const [getDataErrorMessage, setGetDataErrorMessage] = useState(
+    "Um erro Ocorreu"
+  );
+
+  const [current, setCurrent] = useState(null);
 
   const [modalEdit, setModalEdit] = useState(false);
   const [modalInsert, setModalInsert] = useState(false);
@@ -26,13 +36,40 @@ function Clientes() {
   const [modalFilter, setModalFilter] = useState(false);
 
   useEffect(() => {
-    console.log("😁 Pegando Clientes");
+    getData();
   }, []);
+
+
+  async function getData() {
+    await api
+      .get("/api/pessoas")
+      .then((request) => {
+        console.log(request.data);
+        setClientes(request.data);
+      })
+      .catch((error) => {
+        setGetDataError(true);
+        setGetDataErrorMessage(`Um erro ${error.request.status} Ocorreu`);
+      });
+  }
+
+  function deletePermition(item: any) {
+    console.log(item);
+    api
+      .delete(`/api/pessoa/${item.codigo}`)
+      .then((request) => {
+        // console.log(request.data);
+        location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <>
       <Head>
-        <title>Clientes</title>
+        <title>🧍‍♂️🧍‍♀️ Clientes</title>
       </Head>
       <main>
         <HeaderList title="Clientes">
@@ -46,7 +83,7 @@ function Clientes() {
             <RiFilter2Line />
           </Button>
           <Button
-            title="Adicionar cliente"
+            title="Adicionar Cliente"
             action={() => {
               setModalInsert(true);
             }}
@@ -55,30 +92,37 @@ function Clientes() {
             <TiPlus />
           </Button>
         </HeaderList>
+        {getDataError ? <Error message={getDataErrorMessage}></Error> : ""}
         {clientes.map((cliente) => (
-          <CardList key={`${cliente.title}`} title={`${cliente.title}`}>
+          <CardList key={`${cliente.nome}`} title={`${cliente.nome}`}>
+            <CardListNode col="col-xs-6" field="Email" value={cliente.email} />
+
             <CardListNode
-              col="col-xs-12 col-md-4"
-              field="Utilidade"
-              value={`${cliente.utility}`}
+              col="col-xs-6"
+              field="Telefone"
+              value={cliente.telefone}
             />
+
+            <CardListNode col="col-xs-4" field="CEP" value={cliente.cep} />
+
+            <CardListNode
+              col="col-xs-4"
+              field="Cidade"
+              value={cliente.cidade}
+            />
+
+            <CardListNode
+              col="col-xs-4"
+              field="União Federativa"
+              value={cliente.uf}
+            />
+
             <CardListActions>
               <Button
-                title="Visualizar item"
-                action={() => {
-                  setModalViewer(true);
-                }}
-                iconOnly
-                noStyle
-              >
-                <BtnIconCard>
-                  <AiOutlineEye />
-                </BtnIconCard>
-              </Button>
-              <Button
-                title="Editar cliente"
+                title={`Editar cliente ${cliente.nome}`}
                 action={() => {
                   setModalEdit(true);
+                  setCurrent(cliente);
                 }}
                 iconOnly
                 noStyle
@@ -88,9 +132,10 @@ function Clientes() {
                 </BtnIconCard>
               </Button>
               <Button
-                title="Excluir cliente"
+                title={`Excluir permissão ${cliente.nome}`}
                 action={() => {
-                  console.log("😎 Excluir cliente");
+                  console.log("😎 Excluir Cliente");
+                  deletePermition(cliente);
                 }}
                 iconOnly
                 noStyle
@@ -105,10 +150,38 @@ function Clientes() {
       </main>
 
       <Modal open={modalInsert} setClose={() => setModalInsert(!modalInsert)}>
-        INSERT
+        <ClientesForm uf="RS" cidade="Lajeado" type="INSERT" />
       </Modal>
-      <Modal open={modalEdit} setClose={() => setModalEdit(!modalEdit)}>
-        EDIT
+      <Modal
+        open={modalEdit}
+        setClose={() => {
+          setModalEdit(!modalEdit);
+          setCurrent(null);
+        }}
+      >
+        {current ? (
+          <ClientesForm
+            abertura={current.abertura}
+            cep={current.cep}
+            cidade={current.cidade}
+            cnae={current.cnae}
+            cnpj={current.cnpj}
+            codigo={current.codigo}
+            cpf={current.cpf}
+            email={current.email}
+            endereco={current.endereco}
+            nascimento={current.nascimento}
+            natureza_jur={current.natureza_jur}
+            nome={current.nome}
+            rg={current.rg}
+            telefone={current.telefone}
+            tipo={current.tipo}
+            uf={current.uf}
+            type="UPDATE"
+          />
+        ) : (
+          ""
+        )}
       </Modal>
       <Modal open={modalViewer} setClose={() => setModalViewer(!modalViewer)}>
         VIEW

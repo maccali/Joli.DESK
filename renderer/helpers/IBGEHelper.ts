@@ -1,36 +1,18 @@
-import apiIBGE from '../services/apiIbge'
+import apiIBGE from "../services/apiIbge";
 
 const IBGEHelper = {
-  getEstados: () => {
-    apiIBGE
-      .get(
-        'localidades/estados'
-      )
-      .then((response) => {
-
-        console.log(response.data)
-        // const estadoSigla = response.data.map((uf) => uf.sigla);
-        return response.data
-      }).catch((error) => {
-        console.log(error)
-        return []
-      });
-      return []
+  getEstados: async () => {
+    const response = await apiIBGE.get("localidades/estados");
+    const estadoSigla = response.data.map((uf) => uf.sigla);
+    console.log(estadoSigla);
+    return estadoSigla;
   },
-  getCidades: (uf: string) => {
-    apiIBGE
-      .get(
-        `localidades/estados/${uf}/municipios`
-      )
-      .then((response) => {
-        // const nomeCidade = response.data.map((cidade) => cidade.nome);
-        return response.data
-      }).catch((error) => {
-        return []
-      });
-      return []
+  getCidades: async (uf: string) => {
+    const response = await apiIBGE.get(`localidades/estados/${uf}/municipios`);
+    const nomeCidade = response.data.map((cidade) => cidade.nome);
+    console.log(nomeCidade);
+    return nomeCidade;
   },
-}
+};
 
-export default IBGEHelper
-
+export default IBGEHelper;
