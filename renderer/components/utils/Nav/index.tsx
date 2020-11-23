@@ -26,9 +26,24 @@ function Nav() {
     { icone: <TiFlowChildren />, nome: "Processos", url: "/processos" },
     { title: "Administação" },
     { icone: <GoGraph />, nome: "Métricas", url: "/dashboard" },
-    { icone: <TiGroupOutline />, nome: "Grupos", url: "/grupos" },
-    { icone: <AiOutlineUser />, nome: "Usuários", url: "/usuarios" },
-    { icone: <AiOutlineAudit />, nome: "Auditoria", url: "/auditoria" },
+    {
+      icone: <TiGroupOutline />,
+      nome: "Grupos",
+      url: "/grupos",
+      permissao: "administrador",
+    },
+    {
+      icone: <AiOutlineUser />,
+      nome: "Usuários",
+      url: "/usuarios",
+      permissao: "administrador",
+    },
+    {
+      icone: <AiOutlineAudit />,
+      nome: "Auditoria",
+      url: "/auditoria",
+      permissao: "administrador",
+    },
     {
       icone: <AiOutlineLock />,
       nome: "Permissões",

@@ -3,6 +3,7 @@ import Head from "next/head";
 
 import HeaderList from "../../components/utils/headerlist";
 import Totalizator from "../../components/cards/totalizator";
+import Auth from "../../helpers/Auth";
 
 import api from "../../services/api";
 
@@ -18,9 +19,11 @@ function Dashboard() {
   }, []);
 
   async function getTotalRequests() {
-    await api.get("/api/totalizador/requisicoes").then((request) => {
-      setTotalRequests(request.data.total);
-    });
+    if (Auth.isAllow("administrador")) {
+      await api.get("/api/totalizador/requisicoes").then((request) => {
+        setTotalRequests(request.data.total);
+      });
+    }
   }
 
   async function getTotalProcessos() {
