@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import { RiFilter2Line } from "react-icons/ri";
+import { RiContactsLine, RiFilter2Line } from "react-icons/ri";
 import { TiPlus } from "react-icons/ti";
 import { AiOutlineEdit, AiOutlineClose } from "react-icons/ai";
 
@@ -38,7 +38,6 @@ function Clientes() {
   useEffect(() => {
     getData();
   }, []);
-
 
   async function getData() {
     await api

@@ -11,6 +11,7 @@ type InputFace = {
   title?: string;
   placeholder?: string;
   wrongMessage?: string;
+  readonly?: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement & HTMLTextAreaElement>;
 }
 
@@ -21,6 +22,7 @@ function Input({
   value,
   placeholder,
   wrongMessage,
+  readonly,
   onChange,
 }: InputFace) {
 
@@ -87,6 +89,7 @@ function Input({
           placeholder={placeholder}
           type={type}
           name={name}
+          readOnly={readonly}
         />
         {wrongMessage ? <div>
           <Inline

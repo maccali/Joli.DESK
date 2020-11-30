@@ -13,15 +13,13 @@ import BtnIconCard from "../../components/cards/list/buttonicon";
 import Modal from "../../components/utils/modal";
 import Error from "../../components/utils/error/section";
 
-import ClientesForm from "../../components/forms/clientes";
+import ProcessosForm from "../../components/forms/processos";
 
 import api from "../../services/api";
 
-function Clientes() {
-  const [clientes, setClientes] = useState([]);
+function Processo() {
+  const [processos, setProcessos] = useState([]);
   // const [costumes, setCostumes] = useState(null);
-  const [ufList, setUfList] = useState(null);
-  const [cidadeList, setCidadeList] = useState(null);
 
   const [getDataError, setGetDataError] = useState(false);
   const [getDataErrorMessage, setGetDataErrorMessage] = useState(
@@ -39,13 +37,12 @@ function Clientes() {
     getData();
   }, []);
 
-
   async function getData() {
     await api
-      .get("/api/pessoas")
+      .get("/api/processos")
       .then((request) => {
         console.log(request.data);
-        setClientes(request.data);
+        setProcessos(request.data);
       })
       .catch((error) => {
         setGetDataError(true);
@@ -56,7 +53,7 @@ function Clientes() {
   function deletePermition(item: any) {
     console.log(item);
     api
-      .delete(`/api/pessoa/${item.codigo}`)
+      .delete(`/api/processo/${item.codigo}`)
       .then((request) => {
         // console.log(request.data);
         location.reload();
@@ -69,10 +66,10 @@ function Clientes() {
   return (
     <>
       <Head>
-        <title>🧍‍♂️🧍‍♀️ Clientes</title>
+        <title>💌 Processos</title>
       </Head>
       <main>
-        <HeaderList title="Clientes">
+        <HeaderList title="Processos">
           <Button
             title="Filtro"
             action={() => {
@@ -83,7 +80,7 @@ function Clientes() {
             <RiFilter2Line />
           </Button>
           <Button
-            title="Adicionar Cliente"
+            title="Adicionar Processo"
             action={() => {
               setModalInsert(true);
             }}
@@ -93,9 +90,12 @@ function Clientes() {
           </Button>
         </HeaderList>
         {getDataError ? <Error message={getDataErrorMessage}></Error> : ""}
-        {clientes.map((cliente) => (
-          <CardList key={`${cliente.nome}`} title={`${cliente.nome}`}>
-            <CardListNode col="col-xs-6" field="Email" value={cliente.email} />
+        {processos.map((processo) => (
+          <CardList
+            key={`${processo.cod_processo}`}
+            title={`${processo.cod_processo}`}
+          >
+            {/* <CardListNode col="col-xs-6" field="Email" value={cliente.email} />
 
             <CardListNode
               col="col-xs-6"
@@ -115,14 +115,14 @@ function Clientes() {
               col="col-xs-4"
               field="União Federativa"
               value={cliente.uf}
-            />
+            /> */}
 
             <CardListActions>
               <Button
-                title={`Editar cliente ${cliente.nome}`}
+                title={`Editar processo ${processo.cod_processo}`}
                 action={() => {
                   setModalEdit(true);
-                  setCurrent(cliente);
+                  setCurrent(processo);
                 }}
                 iconOnly
                 noStyle
@@ -132,10 +132,10 @@ function Clientes() {
                 </BtnIconCard>
               </Button>
               <Button
-                title={`Excluir permissão ${cliente.nome}`}
+                title={`Excluir processo ${processo.cod_processo}`}
                 action={() => {
                   console.log("😎 Excluir Cliente");
-                  deletePermition(cliente);
+                  deletePermition(processo);
                 }}
                 iconOnly
                 noStyle
@@ -150,7 +150,7 @@ function Clientes() {
       </main>
 
       <Modal open={modalInsert} setClose={() => setModalInsert(!modalInsert)}>
-        <ClientesForm uf="RS" cidade="Lajeado" type="INSERT" />
+        <ProcessosForm type="INSERT" />
       </Modal>
       <Modal
         open={modalEdit}
@@ -160,23 +160,16 @@ function Clientes() {
         }}
       >
         {current ? (
-          <ClientesForm
-            abertura={current.abertura}
-            cep={current.cep}
-            cidade={current.cidade}
-            cnae={current.cnae}
-            cnpj={current.cnpj}
+          <ProcessosForm
             codigo={current.codigo}
-            cpf={current.cpf}
-            email={current.email}
-            endereco={current.endereco}
-            nascimento={current.nascimento}
-            natureza_jur={current.natureza_jur}
-            nome={current.nome}
-            rg={current.rg}
-            telefone={current.telefone}
-            tipo={current.tipo}
-            uf={current.uf}
+            numero={current.numero}
+            processo_tipo={current.processo_tipo}
+            cod_cliente={current.cod_cliente}
+            cod_funcionario={current.cod_funcionario}
+            cod_processo={current.cod_processo}
+            documento={current.documento}
+            documento_processual={current.documento_processual}
+            abertura={current.abertura}
             type="UPDATE"
           />
         ) : (
@@ -193,4 +186,4 @@ function Clientes() {
   );
 }
 
-export default Clientes;
+export default Processo;

@@ -8,6 +8,11 @@ import api from "../../../services/api";
 
 import IBGEHelper from "../../../helpers/IBGEHelper";
 
+type selectFace = {
+  unique: string;
+  value: string;
+};
+
 type ClientesFace = {
   codigo?: string;
   nome?: string;
@@ -51,9 +56,12 @@ function ClientesForm(Clientes: ClientesFace) {
   const [cnae, setCnae] = useState<string>(Clientes.cnae);
   const [abertura, setAbertura] = useState<string>(Clientes.abertura);
 
-  const [ufList, setUfList] = useState<Array<any>>([]);
-  const [cidadeList, setCidadeList] = useState<Array<any>>([]);
-  const [tipoList, setTipoList] = useState<Array<any>>(["FISICA", "JURIDICA"]);
+  const [ufList, setUfList] = useState<Array<selectFace>>([]);
+  const [cidadeList, setCidadeList] = useState<Array<selectFace>>([]);
+  const [tipoList, setTipoList] = useState<Array<selectFace>>([
+    { unique: "FISICA", value: "Fisica" },
+    { unique: "JURIDICA", value: "Juridica" },
+  ]);
 
   const [load, setLoad] = useState<boolean>(false);
 
