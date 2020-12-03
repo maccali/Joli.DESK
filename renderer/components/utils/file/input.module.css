@@ -1,0 +1,40 @@
+.inputcont {
+  display: flex;
+  align-items: initial;
+  flex-direction: column;
+  transition: all 0.2s;
+  margin-bottom: 10px;
+}
+
+.inputcont label {
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.card {
+  padding: 10px;
+  padding-bottom: 20px;
+  border-radius: 7px;
+  color: white;
+  font-size: 16px;
+  background-color: #232535;
+  border: solid 1px rgb(70, 70, 70);
+  margin-bottom: 5px;
+  transition: all 0.2s;
+}
+
+.card p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.card a {
+  text-decoration: none;
+  color: rgb(169, 235, 84);
+}
+
+.card a:hover {
+  text-decoration: none;
+}

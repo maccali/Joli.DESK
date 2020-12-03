@@ -53,7 +53,7 @@ function Processo() {
   function deletePermition(item: any) {
     console.log(item);
     api
-      .delete(`/api/processo/${item.codigo}`)
+      .delete(`/api/processos/${item.codigo}`)
       .then((request) => {
         // console.log(request.data);
         location.reload();
