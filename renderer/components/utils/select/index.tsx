@@ -25,6 +25,7 @@ function Select({ name, identify, items, def, onChange }: SelectFace) {
       <div className={styles.container}>
         <label htmlFor={identify}>{name}</label>
         <select name={identify} id={identify} onChange={onChange} value={def}>
+          <option value="">Selecione</option>
           {items.map((listitem) =>
             typeof listitem === "string" ? (
               listitem === def ? (

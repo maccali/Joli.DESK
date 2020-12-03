@@ -5,6 +5,7 @@ import Select from "../../utils/select";
 import HeaderForm from "../../utils/headerform";
 import Button from "../../utils/button";
 import File from "../../utils/file";
+import Date from "../../utils/date";
 import api from "../../../services/api";
 
 import IBGEHelper from "../../../helpers/IBGEHelper";
@@ -31,10 +32,14 @@ function ProcessosForm(Processos: ProcessosFace) {
   const [processo, setProcesso] = useState<string>(Processos.processo_tipo);
   const [abertura, setAbertura] = useState<string>(Processos.abertura);
   const [documento, setDocumento] = useState<any>(
-    process.env.API_URL + Processos.documento
+    Processos.documento !== undefined
+      ? process.env.API_URL + Processos.documento
+      : ""
   );
   const [documento_processual, setDocumentoProcessual] = useState<any>(
-    process.env.API_URL + Processos.documento_processual
+    Processos.documento_processual !== undefined
+      ? process.env.API_URL + Processos.documento_processual
+      : ""
   );
 
   const [load, setLoad] = useState<boolean>(false);
@@ -71,12 +76,25 @@ function ProcessosForm(Processos: ProcessosFace) {
     const formData = new FormData();
 
     formData.append("cod_cliente", codCliente);
+    formData.append("cod_processo", codProcesso);
     formData.append("numero", numero);
     formData.append("processo_tipo", processo);
     formData.append("abertura", abertura);
     formData.append("documento", documento);
+
     formData.append("documento_processual", documento_processual);
-    console.log(abertura)
+
+    console.log("cod_cliente", codCliente);
+    console.log("cod_cliente", codProcesso);
+    console.log("numero", numero);
+    console.log("processo_tipo", processo);
+    console.log("abertura", abertura);
+    if (typeof documento !== "string") {
+      console.log("documento", documento);
+    }
+    if (typeof documento_processual !== "string") {
+      console.log("documento_processual", documento_processual);
+    }
 
     const config = {
       headers: {
@@ -101,7 +119,7 @@ function ProcessosForm(Processos: ProcessosFace) {
 
     if (Processos.type == "UPDATE") {
       api
-        .post(`/api/processo`, formData, config)
+        .post(`/api/processo/up`, formData, config)
         .then((request) => {
           setLoad(false);
           location.reload();
@@ -121,7 +139,9 @@ function ProcessosForm(Processos: ProcessosFace) {
             <div className="col-xs col-md-12">
               <HeaderForm title="Processo" />
             </div>
+          </div>
 
+          <div className="row">
             <div className="col-xs col-md-6">
               <File
                 title="Documento"
@@ -148,6 +168,8 @@ function ProcessosForm(Processos: ProcessosFace) {
                 }}
               />
             </div>
+          </div>
+          <div className="row">
             <div className="col-xs col-md-6">
               {clientesList ? (
                 <Select
@@ -164,23 +186,21 @@ function ProcessosForm(Processos: ProcessosFace) {
                 ""
               )}
             </div>
-            {/* {codProcesso ? ( */}
-              <div className="col-xs col-md-6">
-                <Input
-                  title="Código Do Processo"
-                  name="cod_processo"
-                  type="text"
-                  value={codProcesso}
-                  onChange={(event) => {
-                    setNumero(event.target.value);
-                  }}
-                  readonly
-                />
-              </div>
-            {/* ) : (
-              ""
-            )} */}
-            <div className="col-xs col-md-12">
+            <div className="col-xs col-md-6">
+              <Input
+                title="Código Do Processo"
+                name="cod_processo"
+                type="text"
+                value={codProcesso}
+                onChange={(event) => {
+                  setNumero(event.target.value);
+                }}
+                readonly
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs col-md-4">
               <Input
                 title="Número"
                 name="numero"
@@ -191,7 +211,7 @@ function ProcessosForm(Processos: ProcessosFace) {
                 }}
               />
             </div>
-            <div className="col-xs col-md-6">
+            <div className="col-xs col-md-4">
               <Input
                 title="Tipo"
                 name="processo_tipo"
@@ -202,16 +222,15 @@ function ProcessosForm(Processos: ProcessosFace) {
                 }}
               />
             </div>
-            <div className="col-xs col-md-6">
-              <input
-                id="date"
-                type="date"
+            <div className="col-xs col-md-4">
+              <Date
+                title="Abertura"
+                name="abertura"
                 value={abertura}
                 onChange={(event) => {
                   setAbertura(event.target.value);
                 }}
               />
-     
             </div>
           </div>
 
