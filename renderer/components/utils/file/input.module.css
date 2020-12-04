@@ -32,9 +32,10 @@
 
 .card a {
   text-decoration: none;
-  color: rgb(169, 235, 84);
+  color: rgb(222, 248, 104);
 }
 
 .card a:hover {
   text-decoration: none;
+  color: rgb(222, 248, 104);
 }

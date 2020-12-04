@@ -7,11 +7,14 @@ import { AiOutlineEdit, AiOutlineClose } from "react-icons/ai";
 import HeaderList from "../../components/utils/headerlist";
 import CardList from "../../components/cards/list";
 import CardListNode from "../../components/cards/list/nodes";
+import CardLinkNode from "../../components/cards/linkNode";
+import CardVersionNode from "../../components/cards/versionNode";
 import CardListActions from "../../components/cards/list/actions";
 import Button from "../../components/utils/button";
 import BtnIconCard from "../../components/cards/list/buttonicon";
 import Modal from "../../components/utils/modal";
 import Error from "../../components/utils/error/section";
+import DateHelper from "../../helpers/DateHelper";
 
 import ProcessosForm from "../../components/forms/processos";
 import ProcessoFilterForm from "../../components/filters/processos";
@@ -40,10 +43,8 @@ function Processo() {
     getData();
   }, []);
 
-
   async function getDataFiltered() {
-
-    console.log(processoFilter)
+    console.log(processoFilter);
 
     await api
       .get(`/api/processos/history/${processoFilter}`)
@@ -115,27 +116,49 @@ function Processo() {
             key={`${processo.cod_processo}`}
             title={`${processo.cod_processo}`}
           >
-            {/* <CardListNode col="col-xs-6" field="Email" value={cliente.email} />
-
-            <CardListNode
-              col="col-xs-6"
-              field="Telefone"
-              value={cliente.telefone}
-            />
-
-            <CardListNode col="col-xs-4" field="CEP" value={cliente.cep} />
-
             <CardListNode
               col="col-xs-4"
-              field="Cidade"
-              value={cliente.cidade}
+              field="Número"
+              value={processo.numero}
             />
 
             <CardListNode
               col="col-xs-4"
-              field="União Federativa"
-              value={cliente.uf}
-            /> */}
+              field="Tipo"
+              value={processo.processo_tipo}
+            />
+
+            <CardListNode
+              col="col-xs-4"
+              field="Abertura"
+              value={DateHelper.getDateTimeFormat(processo.abertura)}
+            />
+
+            <CardListNode
+              col="col-xs-4"
+              field="Documento"
+              value={processo.documento}
+              children={<CardLinkNode link={processo.documento} />}
+            />
+
+            <CardListNode
+              col="col-xs-4"
+              field="Documento Processoal"
+              value={processo.documento_processual}
+              children={<CardLinkNode link={processo.documento_processual} />}
+            />
+
+            <CardListNode
+              col="col-xs-4"
+              field="Versão Data"
+              value={processo.created_at}
+              children={
+                <CardVersionNode
+                  versao={processo.created_at}
+                  excluida={processo.deleted_at}
+                />
+              }
+            />
 
             <CardListActions>
               <Button
