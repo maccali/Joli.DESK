@@ -14,6 +14,7 @@ import Modal from "../../components/utils/modal";
 import Error from "../../components/utils/error/section";
 
 import ProcessosForm from "../../components/forms/processos";
+import ProcessoFilterForm from "../../components/filters/processos";
 
 import api from "../../services/api";
 
@@ -28,6 +29,8 @@ function Processo() {
 
   const [current, setCurrent] = useState(null);
 
+  const [processoFilter, setProcessoFilter] = useState("");
+
   const [modalEdit, setModalEdit] = useState(false);
   const [modalInsert, setModalInsert] = useState(false);
   const [modalViewer, setModalViewer] = useState(false);
@@ -36,6 +39,23 @@ function Processo() {
   useEffect(() => {
     getData();
   }, []);
+
+
+  async function getDataFiltered() {
+
+    console.log(processoFilter)
+
+    await api
+      .get(`/api/processos/history/${processoFilter}`)
+      .then((request) => {
+        console.log(request.data);
+        setProcessos(request.data);
+      })
+      .catch((error) => {
+        setGetDataError(true);
+        setGetDataErrorMessage(`Um erro ${error.request.status} Ocorreu`);
+      });
+  }
 
   async function getData() {
     await api
@@ -180,7 +200,12 @@ function Processo() {
         VIEW
       </Modal>
       <Modal open={modalFilter} setClose={() => setModalFilter(!modalFilter)}>
-        Filter
+        <ProcessoFilterForm
+          codProcesso={processoFilter}
+          setCodProcessoFilter={setProcessoFilter}
+          requestFilter={getDataFiltered}
+          setClose={() => setModalFilter(!modalFilter)}
+        ></ProcessoFilterForm>
       </Modal>
     </>
   );
